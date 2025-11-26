@@ -25,7 +25,25 @@ pnpm run dev
 ## Deploying to GitHub Pages
 
 This project is preconfigured for static export so it can be hosted on GitHub
-Pages:
+Pages.
+
+### One-click deploy from GitHub Actions
+
+The repository includes a [`Deploy GitHub Pages`](.github/workflows/deploy-pages.yml)
+workflow that builds the static export and publishes it to GitHub Pages using
+the [`gh-pages`](https://github.com/actions/deploy-pages) action.
+
+1. Enable GitHub Pages in your repository settings and choose the **GitHub
+   Actions** source.
+2. Push to `main` (or manually dispatch the workflow). The pipeline installs
+   dependencies with pnpm, runs `pnpm run build`, and uploads the `out`
+   directory as the Pages artifact.
+
+The workflow sets `NEXT_PUBLIC_BASE_PATH` to `/${{ github.event.repository.name }}`
+so links work correctly on GitHub Pages. If you need a different base path, set
+`NEXT_PUBLIC_BASE_PATH` in the workflow or repository secrets before building.
+
+### Manual deploy
 
 1. Build the static site. The `output: "export"` setting in
    [`next.config.mjs`](next.config.mjs) will place the files in the `out`
